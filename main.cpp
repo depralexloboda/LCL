@@ -3,6 +3,6 @@
 
 int main(int argc, char **argv) {
 	using namespace lambda_calculus;
-	variable a("fgf");
+    lambda a("\\x.x (x y (\\a.a b)) z");
     return 0;
 }

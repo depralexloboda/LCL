@@ -5,7 +5,7 @@ namespace lambda_calculus{
 	
 	variable::variable(const variable& x) :name(x.name){}
 	
-	variable::variable(variable&& x) :name(std::move(x.name)){}
+    variable::variable(variable&& x) :name(std::move(x.name)){}
 	
 	variable& variable::operator=(const variable& x){
 		if(&x != this){
@@ -30,7 +30,7 @@ namespace lambda_calculus{
 	}
 	
 	lambda_impl* variable::move(){
-		return new variable(std::move(name));
+        return new variable(std::move(name));
 	}
 	
 }

@@ -1,7 +1,7 @@
 #include "abstraction.hpp"
 
 namespace lambda_calculus{
-	abstraction::abstraction(const variable& _var, const lambda& _term) :var(var), term(_term) {}
+    abstraction::abstraction(const variable& _var, const lambda& _term) :var(_var), term(_term) {}
 	
 	abstraction::abstraction(variable&& _var, lambda&& _term) :var(std::move(_var)), term(std::move(_term)){}
 	
