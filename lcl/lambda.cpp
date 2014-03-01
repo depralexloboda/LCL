@@ -16,6 +16,7 @@ namespace {
 		token_type next_token(){
             ++pos;
 			if(pos >= s.size()){
+				current_token = END;
                 return END;
 			}
 			switch(s[pos]){
@@ -33,7 +34,7 @@ namespace {
                     current_token = VARIABLE;
 					return VARIABLE;
 				} else {
-					throw parser_exception();
+					throw parser_exception(s, "Unrecognized token", pos);
 				}
 			}
 		}
@@ -42,29 +43,29 @@ namespace {
 			token_type token = next_token();
 			if(token == LAMBDA){
 				if(next_token() != VARIABLE){
-					throw parser_exception();
+					throw parser_exception(s, "Expected variable", pos);
 				}
 				if(next_token() != POINT){
-					throw parser_exception();
+					throw parser_exception(s, "Expected point \'.\'", pos);
                 }
                 variable var(var_name);
                 return abstraction(std::move(var), expr());
 			}
 			if(token == VARIABLE){
                 if(next_token() == VARIABLE){
-                    throw parser_exception();
+                    throw parser_exception(s, "Unexpected variable", pos);
                 }
 				return variable(var_name);
 			}
 			if(token == LP){
 				lambda l = expr();
                 if(current_token != RP){
-					throw parser_exception();
+					throw parser_exception(s, "Expected \')\'", pos);
 				}
                 next_token();
 				return l;
 			}
-			throw parser_exception();
+			throw parser_exception(s, "Expected \'\\\', variable or \'(\'", pos);
 		}
 		
 		lambda expr(){
@@ -78,7 +79,11 @@ namespace {
 		lambda parse(string _s){
 			s = _s;
 			pos = -1;
-			return expr();
+			lambda temp = expr();
+            if(current_token != END){
+                throw parser_exception(s, "Syntax error", pos);
+            }
+			return std::move(temp);
 		}
 	};
 }
@@ -149,5 +154,16 @@ namespace lambda_calculus{
 	
 	bool lambda::is_application(){
 		return (dynamic_cast<application*>(term) != 0);
+	}
+	
+    parser_exception::parser_exception(string _str, string _cause, int _pos) :str(_str), cause(_cause), pos(_pos){}
+	
+	string parser_exception::message(){
+        string res = cause + "\n" + str + "\n";
+		for(int i = 0; i < pos; i++){
+			res += " ";
+		}
+        res += "^\n";
+        return res;
 	}
 }

@@ -7,7 +7,12 @@ namespace lambda_calculus{
 	using std::ostream;
 	
 	class parser_exception{
-		
+		int pos;
+		string str;
+		string cause;
+	public:
+		parser_exception(string str, string cause, int pos);
+		string message();
 	};
 	
 	class lambda_impl{
