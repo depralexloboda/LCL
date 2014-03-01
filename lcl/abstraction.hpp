@@ -18,6 +18,8 @@ namespace lambda_calculus{
 		abstraction& operator=(abstraction&&);
 		lambda_impl* clone() const;
 		lambda_impl* move();
+		string to_string();
+		string to_string(bool&);
 		~abstraction();
 	};
 }

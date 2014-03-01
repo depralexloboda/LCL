@@ -8,7 +8,7 @@ namespace lambda_calculus{
 	using std::string;
 	class variable: public lambda_impl
 	{
-		std::string name;
+		string name;
 	public:
 		variable(string);
 		variable(const variable&);
@@ -16,6 +16,8 @@ namespace lambda_calculus{
 		variable& operator=(const variable&);
 		variable& operator=(variable&&);
 		~variable();
+		string to_string();
+		string to_string(bool&);
 		lambda_impl* clone() const;
 		lambda_impl* move();
 	};

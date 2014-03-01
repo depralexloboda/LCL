@@ -28,6 +28,25 @@ namespace lambda_calculus{
 		return *this;
 	}
 	
+	string application::to_string(){
+		return "(" + left.to_string() + ")" + " (" + right.to_string() + ")";
+	}
+	
+	string application::to_string(bool& x){
+		string res1 = left.to_string(x);
+		bool x1 = x;
+		string res2 = right.to_string(x);
+		if(x1){
+			return "(" + res1 + ") " + res2;
+		}
+		x = x1 || x;
+		if(right.is_application()){
+			return res1 + " (" + res2 + ")";
+		} else {
+			return res1 + " " + res2;
+		}
+	}
+	
 	application& application::operator=(application&& x){
 		if(this != &x){
 			application temp(std::move(x));

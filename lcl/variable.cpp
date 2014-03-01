@@ -25,6 +25,14 @@ namespace lambda_calculus{
 	
 	variable::~variable(){}
 	
+	string variable::to_string(){
+		return name;
+	}
+	
+	string variable::to_string(bool& x){
+		return name;
+	}
+	
 	lambda_impl* variable::clone() const{
 		return new variable(name);
 	}

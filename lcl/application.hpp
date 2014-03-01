@@ -15,6 +15,8 @@ namespace lambda_calculus{
 		application& operator=(const application&);
 		application& operator=(application&&);
 		~application();
+		string to_string();
+		string to_string(bool&);
 		lambda_impl* clone() const;
 		lambda_impl* move();
 	};

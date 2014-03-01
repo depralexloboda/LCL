@@ -28,6 +28,16 @@ namespace lambda_calculus{
 		return *this;
 	}
 	
+	string abstraction::to_string(){
+		return "\\" + var.to_string() + "." + "(" + term.to_string() + ")";
+	}
+	
+	string abstraction::to_string(bool& x){
+		string res = "\\" + var.to_string(x) + "." + term.to_string(x);
+		x = true;
+		return res;
+	}
+	
 	abstraction& abstraction::operator=(abstraction&& x){
 		if(&x != this){
 			abstraction temp(std::move(x));

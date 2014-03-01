@@ -4,6 +4,7 @@
 
 namespace lambda_calculus{
 	using std::string;
+	using std::ostream;
 	
 	class parser_exception{
 		
@@ -14,6 +15,8 @@ namespace lambda_calculus{
 		virtual ~lambda_impl(){}
 		virtual lambda_impl* clone() const = 0;
 		virtual lambda_impl* move() = 0;
+		virtual string to_string() = 0;
+		virtual string to_string(bool&) = 0;
 	};
 	
 	class lambda{
@@ -29,6 +32,10 @@ namespace lambda_calculus{
 		lambda& operator=(const lambda&);
 		lambda& operator=(lambda&&);
 		virtual ~lambda();
+		string to_string();
+		string to_string(bool&);
+		operator string();
+		bool is_application();
 	};
 }
 

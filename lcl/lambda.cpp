@@ -47,7 +47,8 @@ namespace {
 				if(next_token() != POINT){
 					throw parser_exception();
                 }
-                return abstraction(variable(var_name), expr());
+                variable var(var_name);
+                return abstraction(std::move(var), expr());
 			}
 			if(token == VARIABLE){
                 if(next_token() == VARIABLE){
@@ -131,5 +132,22 @@ namespace lambda_calculus{
 	
     lambda::~lambda(){
         delete term;
+	}
+	
+	string lambda::to_string(){
+		return term->to_string();
+	}
+	
+	string lambda::to_string(bool& b){
+		return term->to_string(b);
+	}
+	
+	lambda::operator string(){
+		bool b;
+		return to_string(b);
+	}	
+	
+	bool lambda::is_application(){
+		return (dynamic_cast<application*>(term) != 0);
 	}
 }
