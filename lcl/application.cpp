@@ -33,9 +33,9 @@ namespace lambda_calculus{
 	}
 	
 	string application::to_string(bool& x){
-		string res1 = left.to_string(x);
+		string res1 = lambda_calculus::to_string(left, x);
 		bool x1 = x;
-		string res2 = right.to_string(x);
+		string res2 = lambda_calculus::to_string(right, x);
 		if(x1){
 			return "(" + res1 + ") " + res2;
 		}
@@ -54,5 +54,15 @@ namespace lambda_calculus{
 			right = std::move(temp.right);
 		}
 		return *this;
+	}
+	
+	void application::get_free_variables(set<variable>& res, map<variable, int>& linked){
+		lambda_calculus::get_free_variables(left, res, linked);
+		lambda_calculus::get_free_variables(right, res, linked);
+	}
+	
+	bool application::is_free_to_substitude(const variable& x, set<variable>& freed, bool is_linked){
+		return lambda_calculus::is_free_to_substitude(left, x, freed, is_linked) ||
+				lambda_calculus::is_free_to_substitude(right, x, freed, is_linked);
 	}
 }

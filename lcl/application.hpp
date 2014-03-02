@@ -15,10 +15,14 @@ namespace lambda_calculus{
 		application& operator=(const application&);
 		application& operator=(application&&);
 		~application();
-		string to_string();
-		string to_string(bool&);
 		lambda_impl* clone() const;
 		lambda_impl* move();
+		
+		string to_string();
+		string to_string(bool&);
+		
+		void get_free_variables(set<variable>&, map<variable, int>&);
+		bool is_free_to_substitude(const variable&, set<variable>&, bool);
 	};
 }
 

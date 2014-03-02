@@ -18,9 +18,13 @@ namespace lambda_calculus{
 		abstraction& operator=(abstraction&&);
 		lambda_impl* clone() const;
 		lambda_impl* move();
+		~abstraction();
+		
 		string to_string();
 		string to_string(bool&);
-		~abstraction();
+		
+		void get_free_variables(set<variable>&, map<variable, int>&);
+		bool is_free_to_substitude(const variable&, set<variable>&, bool);
 	};
 }
 #endif // ABSTRACTION_HPP

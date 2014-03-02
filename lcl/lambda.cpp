@@ -91,6 +91,8 @@ namespace {
 namespace lambda_calculus{
 	lambda::lambda(string s) :lambda(Parser().parse(s)){}
 	
+	lambda::lambda(const char* s) :lambda(string(s)){}
+	
 	lambda::lambda(const lambda& x){
 		term = x.term->clone();
 	}
@@ -139,21 +141,53 @@ namespace lambda_calculus{
         delete term;
 	}
 	
-	string lambda::to_string(){
+	string lambda::to_string() const{
 		return term->to_string();
 	}
 	
-	string lambda::to_string(bool& b){
-		return term->to_string(b);
-	}
-	
-	lambda::operator string(){
+	lambda::operator string() const{
 		bool b;
-		return to_string(b);
+		return term->to_string(b);
 	}	
 	
-	bool lambda::is_application(){
+	string to_string(const lambda& l, bool& b){
+		return l.term->to_string(b);
+	}
+	
+	bool lambda::is_application() const{
 		return (dynamic_cast<application*>(term) != 0);
+	}
+	
+	bool lambda::is_abstraction() const{
+		return (dynamic_cast<abstraction*>(term) != 0);
+	}
+	
+	bool lambda::is_variable() const{
+		return (dynamic_cast<variable*>(term) != 0);
+	}
+	
+	set<variable> lambda::get_free_variables() const{
+		set<variable> res;
+		map<variable, int> linked;
+		term->get_free_variables(res, linked);
+		return res;
+	}
+	
+	bool lambda::is_free_to_substitude(const variable& x, const lambda& l) const{
+        set<variable> freed = l.get_free_variables();
+        return !term->is_free_to_substitude(x, freed, false);
+	}
+	
+	bool is_free_to_substitude(const lambda& l, const variable& x, set<variable>& freed, bool is_linked){
+        return l.term->is_free_to_substitude(x, freed, is_linked);
+	}
+	
+	void get_free_variables(const lambda& l, set<variable>& res, map<variable, int>& linked){
+		l.term->get_free_variables(res, linked);
+	}
+	
+	ostream& operator<<(ostream& out, const lambda& l){
+		out << (string)l;
 	}
 	
     parser_exception::parser_exception(string _str, string _cause, int _pos) :str(_str), cause(_cause), pos(_pos){}

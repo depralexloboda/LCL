@@ -41,4 +41,21 @@ namespace lambda_calculus{
         return new variable(std::move(name));
 	}
 	
+	void variable::get_free_variables(set<variable>& res, map<variable,int>& linked){
+		if(!linked[*this]){
+			res.insert(*this);
+		}
+	}
+	
+	bool variable::operator<(const variable& other) const{
+		return name < other.name;
+	}
+	
+	bool variable::operator==(const variable& other) const{
+		return name == other.name;
+	}
+	
+	bool variable::is_free_to_substitude(const variable& x, set<variable>&, bool is_linked){
+		return x.name == name ? is_linked : false;
+	}
 }

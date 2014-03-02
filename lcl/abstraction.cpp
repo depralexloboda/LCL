@@ -33,7 +33,7 @@ namespace lambda_calculus{
 	}
 	
 	string abstraction::to_string(bool& x){
-		string res = "\\" + var.to_string(x) + "." + term.to_string(x);
+		string res = "\\" + var.to_string(x) + "." + lambda_calculus::to_string(term, x);
 		x = true;
 		return res;
 	}
@@ -45,5 +45,18 @@ namespace lambda_calculus{
 			term = std::move(temp.term);
 		}
 		return *this;
+	}
+	
+	void abstraction::get_free_variables(set<variable>& res, map<variable, int>& linked){
+		++linked[var];
+		lambda_calculus::get_free_variables(term, res, linked);
+		--linked[var];
+	}
+	
+	bool abstraction::is_free_to_substitude(const variable& x, set<variable>& freed, bool is_linked){
+		if(freed.find(var) != freed.end()){
+			return lambda_calculus::is_free_to_substitude(term, x, freed, true);
+		}
+		return lambda_calculus::is_free_to_substitude(term, x, freed, is_linked); 
 	}
 }

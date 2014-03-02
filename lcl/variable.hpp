@@ -6,6 +6,7 @@
 
 namespace lambda_calculus{
 	using std::string;
+	
 	class variable: public lambda_impl
 	{
 		string name;
@@ -16,10 +17,17 @@ namespace lambda_calculus{
 		variable& operator=(const variable&);
 		variable& operator=(variable&&);
 		~variable();
-		string to_string();
-		string to_string(bool&);
 		lambda_impl* clone() const;
 		lambda_impl* move();
+		
+		string to_string();
+		string to_string(bool&);
+		
+		void get_free_variables(set<variable>&, map<variable, int>&);
+		bool is_free_to_substitude(const variable&, set<variable>&, bool);
+		
+		bool operator<(const variable&) const;
+		bool operator==(const variable&) const;
 	};
 }
 #endif // VARIABLE_HPP
