@@ -31,6 +31,7 @@ namespace lambda_calculus{
 		virtual string to_string(bool&) = 0;
 		virtual void get_free_variables(set<variable>&, map<variable, int>&) = 0;
 		virtual bool is_free_to_substitude(const variable&, set<variable>&, bool) = 0;
+		virtual int count_of_betaredexes() = 0;
 	};
 	
 	class lambda{
@@ -61,6 +62,7 @@ namespace lambda_calculus{
 		
 		bool is_free_to_substitude(const variable&, const lambda&) const;
 		set<variable> get_free_variables() const;
+		int count_of_betaredexes() const;
 	};
 	
 	string to_string(const lambda&, bool&);

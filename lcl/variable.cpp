@@ -58,4 +58,8 @@ namespace lambda_calculus{
 	bool variable::is_free_to_substitude(const variable& x, set<variable>&, bool is_linked){
 		return x.name == name ? is_linked : false;
 	}
+	
+	int variable::count_of_betaredexes(){
+		return 0;
+	}
 }

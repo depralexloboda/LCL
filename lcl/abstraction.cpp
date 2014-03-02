@@ -59,4 +59,8 @@ namespace lambda_calculus{
 		}
 		return lambda_calculus::is_free_to_substitude(term, x, freed, is_linked); 
 	}
+	
+	int abstraction::count_of_betaredexes(){
+		return term.count_of_betaredexes();
+	}
 }

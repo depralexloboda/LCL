@@ -25,6 +25,7 @@ namespace lambda_calculus{
 		
 		void get_free_variables(set<variable>&, map<variable, int>&);
 		bool is_free_to_substitude(const variable&, set<variable>&, bool);
+		int count_of_betaredexes();
 	};
 }
 #endif // ABSTRACTION_HPP

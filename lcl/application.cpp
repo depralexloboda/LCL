@@ -65,4 +65,13 @@ namespace lambda_calculus{
 		return lambda_calculus::is_free_to_substitude(left, x, freed, is_linked) ||
 				lambda_calculus::is_free_to_substitude(right, x, freed, is_linked);
 	}
+	
+	int application::count_of_betaredexes()
+	{	
+		int result = left.count_of_betaredexes() + right.count_of_betaredexes();
+		if(left.is_abstraction()){
+			++result;
+		}
+		return result;
+	}
 }

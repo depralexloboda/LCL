@@ -178,6 +178,10 @@ namespace lambda_calculus{
         return !term->is_free_to_substitude(x, freed, false);
 	}
 	
+	int lambda::count_of_betaredexes() const{
+		return term->count_of_betaredexes();
+	}
+	
 	bool is_free_to_substitude(const lambda& l, const variable& x, set<variable>& freed, bool is_linked){
         return l.term->is_free_to_substitude(x, freed, is_linked);
 	}
@@ -188,6 +192,7 @@ namespace lambda_calculus{
 	
 	ostream& operator<<(ostream& out, const lambda& l){
 		out << (string)l;
+		return out;
 	}
 	
     parser_exception::parser_exception(string _str, string _cause, int _pos) :str(_str), cause(_cause), pos(_pos){}
